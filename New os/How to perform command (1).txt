@@ -1,0 +1,435 @@
+1)Find command:-
+
+find . -name a.txt
+
+#Find Read-Only Files
+find / -perm /u=r
+
+find sss -name c.txt
+
+find -type d -name sss
+
+find ~ -name "a.txt"
+
+ #Find all Empty Directories
+find /tmp -type d -empty
+
+#. File all Hidden Files
+find /tmp -type f -name ".*"
+
+find / -size 50M
+
+
+3)more command :-
+
+#overlaping and clearing window not scrolling
+more -c a.txt
+
+# display "Press space to continue "q" to quit
+more -d a.txt
+
+cat a.txt | more
+ls | more
+
+4)less command:-(allow scrolling)
+Ctrl + f : forwards one window
+Ctrl + d : forwards half window
+Ctrl + b : backwards one window
+Ctrl + u : backwards half window
+j : forward by one line
+k : backward by one line
+
+less a.txt
+
+5)head command:-
+
+head -5 a.txt
+
+6)tail command:-
+tail -5 a.txt
+
+7)wc command :-
+wc -l a.txt
+wc -c a.txt
+wc -w a.txt
+
+8)touch command
+-a:-This option changes the access time only
+-m:-This option changes the modification time only.
+-r:-Uses the access and modification times from the reference file.
+
+touch a
+touch b
+stat a
+touch -m a b
+stat a
+
+touch -r a.txt b.txt
+touch m.txt a.txt -m
+#set the time of m replace a
+
+ touch -c -d "16 sep" doc2
+#This is used to update access[-c] and modification[-d: date string] time
+touch -d "2 hours ago" filename
+touch test{1..10}
+
+
+=)regular expression searching command
+1)grep command:-(global regular expression print)
+
+grep "m" a.txt
+grep "M" a.txt
+grep -i "M"  a.txt  #case insensitive
+grep -c "M" a.txt  #line count
+grep -n "M" a.txt #line number
+grep -w "MM" a.txt # word 
+
+grep -f a.txt b.txt #mathching of two file
+grep -L "unix" * #file names that matches & pattern
+
+
+
+2)fgrep command:-fixed-character strings in a file
+fgrep "mm" a.txt
+fgrep -c "m" a.txt #line number
+fgrep "m" *.txt
+fgrep -l "@a" a.txt #print filename
+fgrep -n "@a" a.txt #print line number
+fgrep -x "a" a.txt   #display only lines matched entirely.
+
+
+3)egrep  command:-
+egrep "mital"  *    #globally search
+egrep "m" a.txt
+egrep -c "mm" a.txt   #linenumber mathched
+egrep -l "mm" a.txt  # print filename
+egrep -n "mm" a.txt # print linenumber
+egrep -r "m*" m.txt
+egrep -r "m*" .     #recursively searching whole root
+
+=>working with columns and fields
+1)cut:-
+cat > stat.txt
+Andhra Pradesh
+Arunachal Pradesh
+Assam
+Bihar
+Chhattisgarh
+ctrl+z
+
+cut -b 1,2,3 stat.txt
+cut -b -3 stat.txt
+cut -c 2,3 stat.txt
+
+ cat > b.txt
+01234:567;89
+abcd:drg;ij
+ctrl+z
+
+cat > a
+101;Amit;BCA
+102;Neha;BSc
+ctrl+z
+
+cut -d ";" -f1 a //first column
+cut -d ";" -f1 b.txt  //-f column name
+cut -d ":" -f2 b.txt 
+who | cut -c 1-2
+
+2)paste:-
+paste a.txt b.txt
+paste -d "%" a.txt b.txt
+paste -d "1," a.txt b.txt c.txt
+cat stat.txt | paste
+
+3)join:-
+cat > a.txt
+1 aaa
+2 vvv
+^Z
+cat > b.txt
+1 xxx
+2 ccc
+^Z
+join a.txt b.txt
+join a.txt b.txt > l.txt
+#one column unique
+=>
+1)sort command:-
+sort -r a.txt #reverse
+sort -n a.txt #numerical character
+sort -u a.txt # duplicate remove display
+sort -c a.txt #if already sorted no output
+sort -k2 a.txt #particular column
+sort -m a.txt # sort monthwise
+
+2)unique command:-
+cat > music
+i love music
+i love music
+i love music
+
+uniq music
+uniq -u music #unique line
+uniq -d music #duplicate line
+uniq -c music # count
+
+#redirection and piping
+ls - l >hello   #output(stdout)
+cat >> out.txt  #append data
+cat >> out.txt < l.txt # input data (stdin)
+cat file.txt | grep "mm" a.txt
+cat m.txt | more
+
+#comparing file
+cat > a
+This is a Line1
+^z
+cat > b
+This is a Line2
+^z
+
+1)cmp:-
+$cmp a b #byte
+
+2)comm:-'comm' command is used to compare two files or streams. By default, it displays three columns, first displays non-matching items of the first file, second indicates the non-matching item of the second file, and the third column displays the matching items of both files.
+comm
+comm a b #linebyline
+
+3)diff:-
+diff a b # >line < line
+
+
+=>changing information to file
+1)tr[translate)
+
+cat a | tr 'a-z' 'A-Z'
+cat b.txt | tr 'hello' 'HELLo'
+cat a | tr [:lower:] [:upper:]
+echo "Welcome To Geetanjali" | tr [:space:] "\t"
+tr -d W <<< "Welcome to Geetanjali"  #remove "W"
+echo "my ID is 73535" | tr -d [:digit:]  #remove digit
+echo "my ID is 73535" | tr -cd [:digit:] #complete digit
+echo "hello world" | tr -d ' '
+echo -e "hello\nworld" | tr -d '\n'
+
+
+2)sed (stream editor programme)
+
+cat > a.txt
+unix is great os. unix is opensource. unix is free os.
+learn operating system.
+unix linux which one you choose.
+unix is easy to learn.unix is a multiuser os.Learn unix .unix is a powerful.
+^z
+
+sed 's/unix/linux/' a.txt
+sed 's/unix/linux/g' a.txt   		#globally replacement
+sed '2s/Linux/UNIX/' file.txt      #replace specific line
+
+echo "Welcome To Geetanjali" | sed 's/To/At/'
+sed '3d' file.txt  #d command delete line
+
+3)od:-
+od -b a.txt #convert file in octal format
+od -c a.txt #convert character format
+
+
+MATHEMATICAL CALCULATION
+
+
+BC command:-
+ x=10
+ y=20
+echo $x+$y | bc
+echo "sqrt(16)" | bc -l #advanced mathes
+factor command:-
+factor 10
+
+MONITORING INPUT OUTPUT
+
+tee command:-
+$ls | tee files.txt
+
+✔ Shows ls output on screen
+✔ Saves the same output in files.txt
+
+$ls | tee file.txt file1.txt file2.txt
+
+✔write to multiple lines
+
+cat > a
+1
+2
+3
+cat >b
+4
+5
+6
+wc -l a | tee -a b
+
+who | tee a.txt # content remove and data
+who | tee -a a.txt #add existing file
+
+
+| Feature                			 | `tee` 	| `>` |
+| -----------------------			 | -----	| --- |
+| Show output on screen 	  | ✅  	| ❌   |
+| Save output to file    		 | ✅     | ✅   |
+| Multiple files        			  | ✅     | ❌   |
+| Works in middle of pipe	 | ✅     | ❌   |
+
+
+script command:-(record all the terminal activities)
+script a
+date
+time
+cal
+exit
+cat a
+
+DATE & TIME RELATED COMMAND
+
+cal
+cal 2022
+
+
+date +“%A” #display weekday
+display date in mm/dd/yy
+date +“%D”
+
+COMMUNICATION COMMAND
+
+#The ping command sends an echo request to a host available on the network.
+ping www.google.com
+ping 216.58.203.4
+ping localhost
+
+telnet
+telnet is a network command used to:
+Connect to a remote machine
+Test TCP ports
+Access remote services (plain text)
+⚠️ Important: Telnet is NOT secure (no encryption). It’s mostly used today for testing & troubleshooting, not for login.
+
+syntax:
+telnet hostname port
+example
+telnet 192.168.1.10
+
+
+
+PROCESS RELATED COMMANDS
+ps #display about active process
+#TIME:process running time,
+CMD:command name that launched process ,
+PID:unique process id,
+TTY:terminal type that the user is logged into
+
+ps -f #full display
+ps -u mital #specific user
+
+
+ps -l #check value ni column
+
+sleep 10s
+sleep 1m
+
+S= for second (the default)
+m=for minutes.
+h= for hours.
+d= for days.
+EXAMPLE:
+
+#Create file ‘test.sh’ and run with `sh`
+
+echo “display Message After 10Second”
+sleep 10
+echo “Welcome”
+
+
+
+
+
+
+
+
+wait:-
+1. The ampersand sign (&) after a command indicates a background job.
+
+2. $! fetches the PID of the last background process. Store the previous PID in a variable when working with multiple background processes.
+
+3. $? prints the exit status of the last process.
+wait <pid>
+sleep 10 &
+echo $!
+echo $?
+
+ex:-
+$sleep 10 &
+$jobs -l
+$wait
+#After 10 seconds (due to sleep 10), the console prints a Done message.
+
+
+example
+cat > a <l.txt
+#append all data l.txt 
+
+➡️ Counts number of files/folders.
+
+🔥 Quick Summary Table
+Operator		Name				Use
+<		Input redirection		File → Command
+>		Output redirection		Command → File (overwrite)
+>>		Append				Command → File (append)
+<<		Here document		Multi-line input
+|		pipe					Pipe
+
+
+redirection and piping 
+ls -l > hello		 #output(stdout)
+
+cat >> out.txt		 #append data
+
+cat >> out.txt <l.txt ` #input data(stdin)
+
+cat file.txt | grep "test" a.txt
+cat a.txt | more
+cat who | wc -l
+
+cat  > a <<eof
+>hi
+>hello
+>eof
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

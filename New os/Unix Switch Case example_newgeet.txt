@@ -1,0 +1,714 @@
+variables type 
+1)shell 
+2)system/environment
+3) userdefine variable
+
+Arithmetic calculation
+Arithmetic Expansion ($((...)))
+Using expr Command
+Using let Command
+-------------------------------------------------------
+
+#!/bin/bash
+
+echo "File Name: $0"
+echo "First Parameter : $1"
+echo "Second Parameter : $2"
+echo "Quoted Values: $@"
+echo "Quoted Values: $*"
+echo "Total Number of Parameters : $#"
+
+----------------------------------------------------------------------------------------------------------------------
+#!/bin/sh
+
+for TOKEN in $*
+do
+   echo $TOKEN
+done
+
+----------------------------------------------------------------------------------------------------------------------
+
+
+#!/bin/bash
+echo "Enter	first	number"
+read x
+echo "Enter	second	number"
+read y
+sum=$(( $x + $y ))
+echo "The result of addition=$sum"
+-----------------------------------------------------------------------------------------------------------------------
+-eq	Equality check
+-ne	Inequality check
+-lt	Less Than
+-le	Less Than or Equal
+-gt	Greater Than
+-ge	Greater Than or Equal
+--------------------------------------------------------------------------------------------------------------------------
+#!/bin/sh
+
+a=$1
+b=$2
+
+if [ $a == $b ]
+then
+   echo "a is equal to b"
+else
+   echo "a is not equal to b"
+fi
+--------------------------------------------------------------------------------
+#!/bin/bash
+echo "enter no"
+read n
+if [ $((n%2))==0 ]
+then
+  echo "The number is even."
+else
+  echo "The number is odd."
+fi
+-------------------------------------------------------------------------------
+#!/bin/bash
+if [ `expr $a % 2` == 0 -a $a -gt 10 ]
+then
+echo "$a is even and greater than 10."
+else
+echo "$a failed the test."
+fi
+--------------------------------------------------------------------------------
+case EXPRESSION in
+  Pattern_Case_1)
+   STATEMENTS
+   ;;
+ Pattern_Case_1)
+   STATEMENTS
+   ;;
+ Pattern_Case_N)
+   STATEMENTS
+   ;;
+ *)
+   STATEMENTS
+   ;;
+esac
+------------------------------------------------------------------------------------
+filename:aa.sh
+-------------------------------------------------------------------------------------
+#!/bin/bash
+echo "enter your choice"
+read mycase
+case $mycase in
+1) echo "You selected unix";;
+2) echo "You selected php";;
+3) echo "You selected java";;
+4) echo "You selected c++";;
+5) exit
+esac
+
+
+#Save the script and make it executable.
+$chmod +x aa.sh
+$./aa.sh
+----------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+echo "enter vowel"
+read mycase
+case $mycase in
+'a' || ' A') echo "vowel";;
+'e') echo "vowel";;
+'i') echo "vowel";;
+'o') echo "vowel";;
+'u') echo "vowel";;
+*) echo "consonent" ;;
+esac
+--------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+echo -n "Are you a student? [yes or no]: "
+read response
+case $response in
+
+        "Y" | "y" | "YES" | "Yes" | "yes")
+                echo -n "Yes, I am a student."
+                ;;
+
+        "N" | "n" | "No" | "NO" | "no" | "nO")
+                echo -n "No, I am not a student.";
+                
+                ;;
+        *) echo -n "Invalid input"
+            ;;
+esac
+-------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+echo "Enter	your	lucky	number"
+read n
+case $n in
+101)
+echo echo "You got	1stprize" ;;
+510)
+echo "You got 2nd	prize" ;;
+999)
+echo "You got 3rd	prize" ;;
+*)
+echo "Sorry,tryfor	the next	time" ;;
+esac
+
+--------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+for i in {1..5}
+do
+   sleep $i &
+done
+echo "Background processes started..."
+wait
+echo "All processes have completed!"
+                                                
+
+--------------------------------------------------------------------------------------------
+
+test 5 -gt 2 && echo "Yes"
+
+test 1 -lt 2 && echo "Yes"
+-----------------------------------------------------------------------------------------------------------------------
+for var in word1 word2 ... wordN
+do
+   Statement(s) to be executed for every word.
+done
+
+
+## The C-style Bash for loop ##
+for (( initializer; condition; step ))
+do
+  shell_COMMANDS
+done
+
+
+#/bin/bash
+until <condition>
+do
+    <command 1>
+    <command 2>
+    <etc>
+done
+
+
+#/bin/bash
+while <condition>
+do
+    <command 1>
+    <command 2>
+    <etc>
+done
+---------------------------------------------------------------------------------------------------------------
+#display all the files starting with .bash and available in your home
+#!/bin/sh
+
+for FILE in $HOME/.bash*
+do
+   echo $FILE
+done
+----------------------------------------------------------------------------------------------------------
+#!/bin/sh
+
+for var in 0 1 2 3 4 5 6 7 8 9
+do
+   echo $var
+done
+
+-----------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+for (( i=1 ; i<=5 ; i++ ))
+do
+	for (( j=1 ; j<=i ; j++ ))
+	do
+	echo -n "*"
+	done
+echo " "
+done
+------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+for (( i=1 ; i<=5 ; i++ ))
+do
+	for (( j=1 ; j<=i ; j++ ))
+	do
+	echo -n "$i"
+	done
+echo " "
+done
+-----------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+for i in {1..5}
+do
+   echo "Welcome $i times"
+done
+------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+echo "Bash version ${BASH_VERSION}..."
+for i in {0..10..2} #{START..END..INCREMENT} 
+do
+  echo "Welcome $i times"
+done
+--------------------------------------------------------------------------------------
+#Write a shell script that calculates the sum of integers from 1 to N using a loop.
+#!/bin/bash
+
+echo "Enter a number (N):"
+read N
+sum=0
+for (( i=1; i<=$N; i++ )); do
+sum=$((sum + i))
+done
+echo "Sum of integers from 1 to $N is: $sum"
+-------------------------------------------------------------------------------
+#Create a script that searches for a specific word in a file and counts its occurrences.
+
+#!/bin/bash
+
+--------------------------------------------------------------------------------------------
+#Create a script that checks for and removes duplicate lines in a text file.
+#!/bin/bash
+echo "Enter the word to search for:"
+read target_word
+echo "Enter the filename:"
+read filename
+count=$(grep -o -w "$target_word" "$filename" | wc -l)
+echo "The word '$target_word' appears $count times in '$filename'."
+
+#!/bin/bash
+input_file="in.txt"
+output_file="output.txt"
+sort "$input_file" | uniq > "$output_file"
+echo "Duplicate lines removed successfully."
+------------------------------------------------------------------------------------------
+#Write a script that generates a secure random password.
+#!/bin/bash
+# Function to generate a random password
+generate_password() 
+{
+tr -dc 'A-Za-z0-9!@#$%^&*()_+{}[]' < /dev/urandom | fold -w 12 | head -n 1
+}
+# Call the function and store the generated password
+password=$(generate_password)
+echo "Generated password: $password"
+-----------------------------------------------------------------------------------------
+#Create a shell script that finds and lists all empty files in a directory.
+
+#!/bin/bash
+directory="$1"
+
+if [ -z "$directory" ]; then
+echo "Usage: $0 <directory>"
+exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+echo "Error: '$directory' is not a valid directory."
+
+exit 1
+fi
+echo "Empty files in $directory:"
+find "$directory" -type f -empty
+-----------------------------------------------------------------------------------
+#Create a script that checks if a network host is reachable.
+#!/bin/bash
+host="$1"
+if [ -z "$host" ]; then
+echo "Usage: $0 <hostname or IP>"
+exit 1
+fi
+ping -c 4 "$host"
+ 
+if [ $? -eq 0 ]; then
+echo "$host is reachable."
+else
+echo "$host is not reachable."
+fi
+
+------------------------------------------------------------------------------------
+
+
+#/bin/bash
+a=0
+# -gt is greater than operator
+#Iterate the loop until a is greater than 10
+until [ $a -gt 10 ]
+do
+    # Print the values
+    echo $a
+
+    # increment the value
+    a=`expr $a + 1`
+done
+-----------------------------------------------------------------------------------------------------------------------
+//was multiplication table
+
+#!/bin/bash
+echo "Enter a Number"
+read n
+i=1
+
+while [ $i -le 10 ]
+do
+          echo " $n x $i = $(( n * i ))"
+          i=$(( i + 1 ))
+done
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+#!/bin/bash
+rows=5
+for((i=rows; i>=1; i--))
+do
+  for((j=1; j<=i; j++))
+  do
+    echo -n "* "
+  done
+  echo
+done
+--------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+clear
+p=$1
+r=$2
+n=$3
+let int=`expr $p \* $r \* $n `
+int=`expr $int / 100 `
+echo "simple interest , $int"
+--------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+echo "enter the year"
+read a
+year= $a
+a=$(( $a % 4 ))
+if [ $a -eq 0 ];
+then 
+echo "$year is leap"
+else 
+echo "$year is not a leap year"
+fi
+======================================
+#!/bin/bash
+
+echo "Enter	any	number"
+read n
+
+if [[ ( $n -eq 15 || $n  -eq 45 ) ]]
+then
+echo "You	won	the	game"
+else
+echo "You	lost	the	game"
+fi
+======================================
+#!/bin/bash
+
+echo "Enter	your	lucky	number"
+read n
+
+if [ $n -eq 101 ];
+then
+echo "You	got	1st	prize"
+elif [ $n -eq 510 ];
+then
+echo "You	got	2nd	prize"
+elif [ $n -eq 999 ];
+then
+echo "You	got	3rd	prize"
+else
+echo "Sorry,	try	for	thenext	time"
+fi
+
+========================================
+#!/bin/bash
+echo "enter file name"
+ read fname
+ if [ -f $fname ]; then 
+echo "$fname file exist" 
+else
+ echo "sorry, $fname file does not exist"
+ fi
+===================================
+#!/bin/bash
+echo "Enter directory name"
+read ndir
+if [ -d "$ndir" ]
+then
+echo "Directory exist"
+else
+`mkdir $ndir`
+echo "Directory created"
+fi
+=====================================================================================
+#!/bin/bash
+function F1()
+{
+echo 'I like bash programming'
+}
+F1
+=================================
+
+Creating Functions
+function_name ()
+ { 
+   list of commands
+}
+----------------------------------------------------------
+#!/bin/sh
+
+# Define your function here
+Hello () 
+{
+   echo "Hello World"
+}
+
+# Invoke your function
+Hello
+
+--------------------------------------------------------
+#!/bin/sh
+
+# Define your function here
+Hello ()
+ {
+   echo "Hello World $1 $2"
+}
+
+# Invoke your function
+Hello Zara Ali
+
+---------------------------------------------------------
+#!/bin/sh
+
+# Define your function here
+Hello () {
+   echo "Hello World $1 $2"
+   return 10
+}
+
+# Invoke your function
+Hello Zara Ali
+
+# Capture value returnd by last command
+ret=$?
+
+echo "Return value is $ret"
+--------------------------------------------------------
+#!/bin/sh
+
+# Calling one function from another
+number_one () 
+{
+   echo "This is the first function speaking..."
+   number_two
+}
+
+number_two () 
+{
+   echo "This is now the second function speaking..."
+}
+
+# Calling function one.
+number_one
+-----------------------------------------------------------
+#!/bin/bash
+echo -n "Enter Left-End: " 
+read le
+echo -n "Enter Right-End: " 
+read rid
+
+is_prime()
+{ 
+   if [ $1 -lt 2 ]; then 
+       return 
+   fi 
+   ctr=0 
+   for((i=2;i<$1;i++))
+  { 
+       if [ $(( $1 % i )) -eq 0 ]; then 
+           ctr=$(( ctr + 1 )) 
+       fi 
+   }
+   if [ $ctr -eq 0 ]; then 
+       printf "%d " "$1" 
+   fi 
+}
+printf "Prime Numbers between %d and %d are: " "$le" "$ri"
+for((i=le;i<=ri;i++))
+{ 
+   is_prime $i 
+} 
+printf "\n" 
+-------------------------------------------------------------------------------
+#!/bin/bash
+is_odd()
+{ 
+  x=$1
+  if [ $((x%2)) == 0 ]; then
+     echo "Invalid Input"
+     exit 1
+  else
+     echo "Number is Odd"
+  fi
+}
+is_odd 64
+--------------------------------------------------------------------------------
+#!/bin/bash
+add()
+{
+	return $(($1+$2))
+}
+multiply()
+{
+	return $(($1*$2))
+}
+# Call Addition for 3 and 4 == 7
+add 3 4
+# Call multiplication for 3 and 4 == 12
+multiply 3 4
+# Call Addition for 5 and 4 == 9
+add 5 4
+# Store answer (always stores final function call returned value)
+ans=$?
+echo "$ans"
+---------------------------------------------------------------------------------------
+#!/bin/bash
+# Name - math.sh
+# Purpose - Demo return value 
+# ------------------------------------
+
+## user define function
+math()
+{
+	local a=$1
+	local b=$2
+	local sum=$(( a + b))
+	return $sum
+}
+
+## call the math function with 5 and 10 as  arguments 
+math 5 10
+
+## display back result (returned value) using $?
+echo "5 + 10 = $?"
+----------------------------------------------------------
+Test for empty arguments: Use the -z operator to check if an argument is empty
+#!/bin/bash
+ 
+function check_empty()
+ {
+  if [ -z "$1" ]; then
+    echo "Error: Argument is empty!"
+    return 1
+  fi
+  echo "Argument: $1"
+}
+ 
+check_empty "apple"
+check_empty ""
+-------------------------------------------------------------------
+#The following is one such function used to calculate the average of the given numbers.
+#!/bin/bash
+find_avg()
+{ 
+  len=$#
+  sum=0
+  for x in "$@"
+  do
+     sum=$((sum + x))
+  done
+  avg=$((sum/len))
+  return $avg
+}
+find_avg 30 40 50 60
+printf "%f" "$?"
+printf "\n"
+--------------------------------------------------------------------------
+#Below function creates a simple digital clock on terminal
+#T   Displays the 24-hour clock (00-23) in the format equivalent to HH:MM:SS
+#!/bin/bash
+function digital_clock 
+{
+            clear
+            while [ 1 ]
+            do
+                  date +'%T'
+                  sleep 1
+                  clear
+            done
+ }
+digital_clock
+---------------------------------------------------------------
+## This is the second function
+#!/bin/bash
+compare()
+{
+
+file1 = $1
+
+file2 = $2
+
+cmp $file1 $file2
+
+if [ $file1 -eq $file2 ]
+then
+        echo "comparison is possible"
+else
+        echo "compariosn is not possible"
+fi
+}
+compare file1 file2
+----------------------------------------
+#Write a script to backup a database and compress the backup file.
+#!/bin/bash
+db_user="root"
+db_pass=""
+db_name="stud"
+backup_dir="/path/to/backup"
+timestamp=$(date +"%Y%m%d%H%M%S")
+mysqldump -u "$db_user" -p"$db_pass" "$db_name" | gzip > "$backup_dir/db_backup_$timestamp.sql.gz"
+
+
+solution
+sudo dpkg --configure -a
+
+
+
+
+---------------------------------------------------------
+Create a script to add, modify, or delete user accounts on a Linux system.
+#!/bin/bash
+action="$1"
+username="$2"
+case $action in
+    "add")
+        useradd "$username"
+        ;;
+    "modify")
+        usermod -s /bin/bash "$username"
+        ;;
+    "delete")
+        userdel "$username"
+        ;;
+    *)
+        echo "Usage: $0 {add|modify|delete} username"
+        exit 1
+        ;;
+esac
+===========================================================
+Create a script to perform routine system maintenance tasks like cleaning up temporary files, updating packages, etc.
+
+#!/bin/bash
+# Clean up temporary files
+rm -rf /tmp/*
+# Update packages
+apt-get update && apt-get upgrade -y
+===========================================================
+
+
+which nano
+
+undo -> mu ->alt->u
+clear alt->t
+copy ctrl+shift+c
+paste ctrl+shift+v
+
+
+
