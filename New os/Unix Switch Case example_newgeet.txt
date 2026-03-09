@@ -259,8 +259,21 @@ done
 echo "Sum of integers from 1 to $N is: $sum"
 -------------------------------------------------------------------------------
 #Create a script that searches for a specific word in a file and counts its occurrences.
-
+/* below code is may be perfect */
 #!/bin/bash
+#!/bin/bash
+
+echo "Enter Your Word: "
+
+read word
+
+echo "Enter Your File Name: "
+
+read file
+
+count=$(grep -o "$word" "$file" | wc -l)
+
+echo "The Word '$word' appears $count Times In $file"
 
 --------------------------------------------------------------------------------------------
 #Create a script that checks for and removes duplicate lines in a text file.
