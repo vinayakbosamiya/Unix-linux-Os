@@ -716,8 +716,11 @@ paste ctrl+shift+v
 
 
 /* 
-for egrap,grep,fgrep
+for egrap,grep,fgrep :
 1)https://chatgpt.com/c/69aeaf30-cddc-8320-af13-8df9233e7599
 2)https://chatgpt.com/c/69aea01b-8750-8323-9c69-530ccc2be51f
+
+for script :
+https://chatgpt.com/c/69aec17d-87dc-8324-93cd-ea8b27ca5d6e
 
 */
